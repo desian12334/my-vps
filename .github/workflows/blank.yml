@@ -1,35 +1,11 @@
-name: VPS Lengkap
-
-on:
-  workflow_dispatch:
+name: tmate session
+on: [workflow_dispatch]
 
 jobs:
-  build:
+  tmate:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout repo private tanpa password/SSH key
-      - name: Checkout kode private
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
 
-      # Start SSH session via tmate (opsional)
-      - name: Start SSH via tmate
-        uses: mxschmitt/action-tmate@v3
-        with:
-          wait-for-ssh: true
-          ssh: true
-          tmate-tty: false
-
-      - name: Display SSH info
-        run: |
-          echo "========== SSH INFO =========="
-          echo "Gunakan alamat SSH di bawah ini untuk connect ke Ubuntu runner:"
-          echo "ssh \$TMATE_SSH"
-          echo "=============================="
-
-      - name: Keep Alive
-        run: |
-          echo "Runner aktif. Tekan Ctrl+C di log untuk stop."
-          sleep 60000  # 6 jam
+      - name: Start tmate session
+        uses: mxschmitt/action-tmate@v4
